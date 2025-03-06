@@ -1,1 +1,5 @@
-.venv/
+venv/
+Utils/__pycache__/
+visit/__pycache__/
+API/__pycache__/
+__pycache__/
