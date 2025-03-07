@@ -5,3 +5,7 @@ API/__pycache__/
 __pycache__/
 
 .env
+
+cron_test.log
+
+test_scraper.log

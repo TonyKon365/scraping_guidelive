@@ -70,6 +70,7 @@ async def get_events_from_neckofthewoods():
             print(f"Error processing an article: {e}")
             continue
 
+
   
     print("get_events_from_neckofthewoods")
 
