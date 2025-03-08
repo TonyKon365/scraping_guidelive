@@ -6,11 +6,13 @@ from supabase import create_client, Client
 import os
 from urllib.parse import urljoin
 import re
-
+from dotenv import load_dotenv
 from Utils.open_ai import customize, customizable
 Server_API_URL = "https://www.neckofthewoods.co.nz/events"
 target_id = 'neckofthewoods'
 target_url = 'https://www.neckofthewoods.co.nz/'
+
+load_dotenv()
 
 url: str = os.getenv("SUPABASE_URL")
 key: str = os.getenv("SUPABASE_KEY")
@@ -65,7 +67,7 @@ async def get_events_from_neckofthewoods():
                     "country": "New Zealand"
                 }
             }
-            await save_to_supabase(result)
+            # await save_to_supabase(result)
         except Exception as e:
             print(f"Error processing an article: {e}")
             continue
@@ -88,7 +90,7 @@ def scrape_detail_page(event_url):
     title=location[0].text.strip()
     street=location[2].text.strip()
     region=location[1].text.strip()
-    # return start_date,title,street,region
+    return start_date,title,street,region
 
 
 async def save_to_supabase(article):
@@ -102,6 +104,7 @@ async def save_to_supabase(article):
         )
     if not existing_article.data:
         response = supabase.table("Event1").insert(card).execute()
+        print(card)
 
 
 

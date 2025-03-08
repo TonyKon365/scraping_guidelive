@@ -6,121 +6,116 @@ from dotenv import load_dotenv
 import asyncio
 from apscheduler.schedulers.background import BackgroundScheduler  # type: ignore
 from datetime import datetime
-
-# News
-from visit.totarastreetNews import get_news_from_totarastreet
-from visit.eventfindaNews import get_news_from_eventfinda
-from visit.undertheradarNews import get_news_from_undertheradar
-from visit.christchurchnzNews import get_news_from_christchurchnz
-from visit.voicesnzNews import get_news_from_voicesnz
-from visit.aucklandliveNews import get_news_from_aucklandlive
-from visit.taupowinterfestivalNews import get_news_from_taupowinterfestival
-from visit.comedyfestivalNews import get_news_from_comedyfestival
-from visit.neckofthewoodsNews import get_news_from_neckofthewoods
-from visit.rotoruanzNews import get_news_from_rotoruanz
-from visit.greenstoneentertainmentNews import get_news_from_greenstoneentertainment
-from visit.wellingtonnzNews import get_news_from_wellingtonnz
-#events
-from visit.visitperth import get_events_from_visitperth
-from visit.eventfinda import get_events_from_eventfinda
-from visit.undertheradar import get_events_from_undertheradar
-from visit.nzso import get_events_from_nzso
-from visit.mytauranga import get_events_from_mytauranga
-from visit.jazz import get_events_from_jazz
-from visit.comedyfestival import get_events_from_comedyfestival
-from visit.festivaloflights import get_events_from_festivaloflights
-from visit.taupowinterfestival import get_events_from_taupowinterfestival
-from visit.aaaticketing import get_events_from_aaaticketing
-from visit.humanitix import get_events_from_humanitix
-from visit.whakatance import get_events_from_whakatance
-from visit.crankworx import get_events_from_crankworx
-from visit.wellingtonnz import get_events_from_wellingtonnz
-from visit.heartofthecity import get_events_from_heartofthecity
-from visit.Rotoruanui import get_events_from_rotoruanui
-from visit.hawkesbaynz import get_events_from_hawkesbaynz
-from visit.venuesotautahi import get_events_from_venuesotautahi
-from visit.northlandnz import get_events_from_northlandnz
-from visit.frontiertouring import get_events_from_frontiertouring
-from visit.voicesnz import get_events_from_voicesnz
-from visit.nzopera import get_events_from_nzopera
-from visit.aucklandlive import get_events_from_aucklandlive
-from visit.dingdongloungenz import get_events_from_dingdongloungenz
-from visit.totarastreet import get_events_from_totarastreet
-from visit.powerstation import get_events_from_powerstation
-from visit.theincubator import get_events_from_theincubator
-from visit.bayvenues import get_events_from_bayvenues
-from visit.galatos import get_events_from_galatos
-from visit.hollywoodavondale import get_events_from_hollywoodavondale
-from visit.cabana import get_events_from_cabana
-from visit.crownrangelounge import get_events_from_crownrangelounge
-from visit.valhallatavern import get_events_from_valhallatavern
-from visit.arollingstone import get_events_from_arollingstone
+import sys  
+# # News
+# from visit.totarastreetNews import get_news_from_totarastreet
+# from visit.eventfindaNews import get_news_from_eventfinda
+# from visit.undertheradarNews import get_news_from_undertheradar
+# from visit.christchurchnzNews import get_news_from_christchurchnz
+# from visit.voicesnzNews import get_news_from_voicesnz
+# from visit.aucklandliveNews import get_news_from_aucklandlive
+# from visit.taupowinterfestivalNews import get_news_from_taupowinterfestival
+# from visit.comedyfestivalNews import get_news_from_comedyfestival
+# from visit.neckofthewoodsNews import get_news_from_neckofthewoods
+# from visit.rotoruanzNews import get_news_from_rotoruanz
+# from visit.greenstoneentertainmentNews import get_news_from_greenstoneentertainment
+# from visit.wellingtonnzNews import get_news_from_wellingtonnz
+# #events
 from visit.neckofthewoods import get_events_from_neckofthewoods
-from visit.forummelbourneEvent import get_event_from_forummelbourne
-from visit.cornerhotelEvent import get_event_from_cornerhotel
-from visit.thetotehotelEvent import get_event_from_thetotehotel
-from visit.brisbaneEvent import get_event_from_brisbane
-from visit.destinationgoldcoastEvent import get_event_from_destinationgoldcoast
-from visit.bohmpresentsEvent import get_event_from_bohmpresents
-from visit.ticketfairyEvent import get_event_from_ticketfairy
-from visit.bigfanEvent import get_event_from_bigfan
-from visit.yonderqtEvent import get_event_from_yonderqt
-from visit.iticketEvent import get_event_from_iticket
-from visit.eventbriteEvent import get_event_from_eventbriteNZ
-from visit.livenationEvent import get_event_from_livenationNZ
-from visit.livenation import get_events_from_livenation
-from visit.tuningforkEvent import get_event_from_tuningfork
-from visit.sanfranEvent import get_event_from_sanfran
-from visit.ecclesEvent import get_event_from_eccles
-from visit.rnzbEvent import get_event_from_rnzb
-from visit.plonkwinebar import get_event_from_plonkwinebar
-from visit.ponsonbysocialclub import get_event_from_ponsonbysocialclub
-from visit.croxtonparkhotel import get_event_croxtonparkhotel
-from visit.moshtix import get_event_moshtix
-from visit.ticketfairyNz import get_event_ticketfairyNz
-from visit.ticketfairyAu import get_event_ticketfairyAu
-from visit.moshtixAu import get_event_moshtixAu
-from visit.enmoretheatreAu import get_event_enmoretheatreAu
-from visit.aucklandartgallery import get_event_aucklandartgallery
-from visit.aucklandmuseum import get_event_aucklandmuseum
-from visit.tepapaevents import get_event_get_tepapaevents
-from visit.sydney import get_event_sydney
-from visit.metrotheatre import get_event_metrotheatre
-from visit.paraoa import get_event_paraoa
-from visit.bandsintown import get_event_bandsintown
-from visit.unitedcinemas import get_event_unitedcinemas
-from visit.basementcinema import get_event_basementcinema
-from visit.abstract import get_event_abstract
-from visit.academycinemas import get_event_academycinemas
-from visit.silkyotter import get_event_silkyotter
-from visit.tivolicinema import get_event_tivolicinema
-from visit.libertystage import get_event_libertystage
-from visit.homegrown import get_event_homegrown
-from visit.manawatunz import get_event_manawatunz
-from visit.taranaki import get_event_taranaki
-from visit.wildfortaranaki import get_event_wildfortaranaki
-from visit.pumphouse import get_event_pumphouse
-from visit.mustdobrisbane import get_event_mustdobrisbane
-from visit.lovetaupo import get_event_lovetaupo
-from visit.waikatonz import get_event_waikatonz
-from visit.byronbay import get_event_byronbay
-from visit.govettbrewster import get_event_govettbrewster
-from visit.bachmusica import get_event_bachmusica
-from visit.worldofwearableart import get_event_worldofwearableart
-from visit.lakehousearts import get_event_lakehousearts
-from visit.comedy import get_event_comedy
-from visit.circa import get_event_circa
-from visit.wunderbar import get_event_wunderbar
-from visit.dunedinnz import get_event_dunedinnz
+
+# from visit.visitperth import get_events_from_visitperth
+# from visit.eventfinda import get_events_from_eventfinda
+# from visit.undertheradar import get_events_from_undertheradar
+# from visit.nzso import get_events_from_nzso
+# from visit.mytauranga import get_events_from_mytauranga
+# from visit.jazz import get_events_from_jazz
+# from visit.comedyfestival import get_events_from_comedyfestival
+# from visit.festivaloflights import get_events_from_festivaloflights
+# from visit.taupowinterfestival import get_events_from_taupowinterfestival
+# from visit.aaaticketing import get_events_from_aaaticketing
+# from visit.humanitix import get_events_from_humanitix
+# from visit.whakatance import get_events_from_whakatance
+# from visit.crankworx import get_events_from_crankworx
+# from visit.wellingtonnz import get_events_from_wellingtonnz
+# from visit.heartofthecity import get_events_from_heartofthecity
+# from visit.Rotoruanui import get_events_from_rotoruanui
+# from visit.hawkesbaynz import get_events_from_hawkesbaynz
+# from visit.venuesotautahi import get_events_from_venuesotautahi
+# from visit.northlandnz import get_events_from_northlandnz
+# from visit.frontiertouring import get_events_from_frontiertouring
+# from visit.voicesnz import get_events_from_voicesnz
+# from visit.nzopera import get_events_from_nzopera
+# from visit.aucklandlive import get_events_from_aucklandlive
+# from visit.dingdongloungenz import get_events_from_dingdongloungenz
+# from visit.totarastreet import get_events_from_totarastreet
+# from visit.powerstation import get_events_from_powerstation
+# from visit.theincubator import get_events_from_theincubator
+# from visit.bayvenues import get_events_from_bayvenues
+# from visit.galatos import get_events_from_galatos
+# from visit.hollywoodavondale import get_events_from_hollywoodavondale
+# from visit.cabana import get_events_from_cabana
+# from visit.crownrangelounge import get_events_from_crownrangelounge
+# from visit.valhallatavern import get_events_from_valhallatavern
+# from visit.arollingstone import get_events_from_arollingstone
+
+# from visit.forummelbourneEvent import get_event_from_forummelbourne
+# from visit.cornerhotelEvent import get_event_from_cornerhotel
+# from visit.thetotehotelEvent import get_event_from_thetotehotel
+# from visit.brisbaneEvent import get_event_from_brisbane
+# from visit.destinationgoldcoastEvent import get_event_from_destinationgoldcoast
+# from visit.bohmpresentsEvent import get_event_from_bohmpresents
+# from visit.ticketfairyEvent import get_event_from_ticketfairy
+# from visit.bigfanEvent import get_event_from_bigfan
+# from visit.yonderqtEvent import get_event_from_yonderqt
+# from visit.iticketEvent import get_event_from_iticket
+# from visit.eventbriteEvent import get_event_from_eventbriteNZ
+# from visit.livenationEvent import get_event_from_livenationNZ
+# from visit.livenation import get_events_from_livenation
+# from visit.tuningforkEvent import get_event_from_tuningfork
+# from visit.sanfranEvent import get_event_from_sanfran
+# from visit.ecclesEvent import get_event_from_eccles
+# from visit.rnzbEvent import get_event_from_rnzb
+# from visit.plonkwinebar import get_event_from_plonkwinebar
+# from visit.ponsonbysocialclub import get_event_from_ponsonbysocialclub
+# from visit.croxtonparkhotel import get_event_croxtonparkhotel
+# from visit.moshtix import get_event_moshtix
+# from visit.ticketfairyNz import get_event_ticketfairyNz
+# from visit.ticketfairyAu import get_event_ticketfairyAu
+# from visit.moshtixAu import get_event_moshtixAu
+# from visit.enmoretheatreAu import get_event_enmoretheatreAu
+# from visit.aucklandartgallery import get_event_aucklandartgallery
+# from visit.aucklandmuseum import get_event_aucklandmuseum
+# from visit.tepapaevents import get_event_get_tepapaevents
+# from visit.sydney import get_event_sydney
+# from visit.metrotheatre import get_event_metrotheatre
+# from visit.paraoa import get_event_paraoa
+# from visit.bandsintown import get_event_bandsintown
+# from visit.unitedcinemas import get_event_unitedcinemas
+# from visit.basementcinema import get_event_basementcinema
+# from visit.abstract import get_event_abstract
+# from visit.academycinemas import get_event_academycinemas
+# from visit.silkyotter import get_event_silkyotter
+# from visit.tivolicinema import get_event_tivolicinema
+# from visit.libertystage import get_event_libertystage
+# from visit.homegrown import get_event_homegrown
+# from visit.manawatunz import get_event_manawatunz
+# from visit.taranaki import get_event_taranaki
+# from visit.wildfortaranaki import get_event_wildfortaranaki
+# from visit.pumphouse import get_event_pumphouse
+# from visit.mustdobrisbane import get_event_mustdobrisbane
+# from visit.lovetaupo import get_event_lovetaupo
+# from visit.waikatonz import get_event_waikatonz
+# from visit.byronbay import get_event_byronbay
+# from visit.govettbrewster import get_event_govettbrewster
+# from visit.bachmusica import get_event_bachmusica
+# from visit.worldofwearableart import get_event_worldofwearableart
+# from visit.lakehousearts import get_event_lakehousearts
+# from visit.comedy import get_event_comedy
+# from visit.circa import get_event_circa
+# from visit.wunderbar import get_event_wunderbar
+# from visit.dunedinnz import get_event_dunedinnz
 
 
-
-# -------- END --------
-
-scheduler = BackgroundScheduler()
-app = FastAPI()
-load_dotenv()
-supabase: Client = create_client(os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_KEY"))  # type: ignore
 
 
 
@@ -226,5 +221,7 @@ if __name__ == "__main__":
   with open("/home/ubuntu/scraping_guidelive/test_scraper.log", "a") as log_file:
     log_file.write(f"The scraping start has been run. {datetime.now()}\n")
   asyncio.run(scrape_events())
+
   with open("/home/ubuntu/scraping_guidelive/test_scraper.log", "a") as log_file:
     log_file.write(f"Scraping had been end  at {datetime.now()}\n")
+  sys.exit(0)

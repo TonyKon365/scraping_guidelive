@@ -203,3 +203,9 @@ source venv/bin/activate
 # Run the actual scraper script
 python scraper.py
 Save the changes and ensure it works as expected.
+
+
+
+#############################FastAPI server#################
+Open the server_logs.txt file to see the logs:
+cat server_logs.txt
