@@ -121,6 +121,8 @@ from visit.neckofthewoods import get_events_from_neckofthewoods
 
 # CronJob function
 async def scrape_events():
+        # await get_event_from_livenationNZ()
+
     # await get_events_from_aucklandlive()   
     #  await get_events_from_visitperth()   
     #  await get_event_from_destinationgoldcoast()
@@ -140,7 +142,7 @@ async def scrape_events():
     # await get_events_from_livenation()
     # await get_events_from_nzopera() 
     # await get_events_from_voicesnz() 
-    # await get_event_from_livenationNZ()
+
     # await get_events_from_northlandnz()
     # await get_events_from_venuesotautahi()
     # await get_events_from_taupowinterfestival() 

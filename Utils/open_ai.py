@@ -46,7 +46,7 @@ EVENT_TEMPLATE = {
     "event_imgurl": "https://www.rotoruanui.nz/wp-content/uploads/2021/07/Rotorua-Government-Gardens-Tours-370x211.jpg",
 }
 
-NEWS_TEMPLATE = {
+EVENT_TEMPLATE_news = {
     "target_id": "eventfindaNews",
     "target_url": "https://www.eventfinda.co.nz/news",
     "title": "Government Gardens Guided Tours (2024)",
