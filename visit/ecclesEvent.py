@@ -40,7 +40,12 @@ async def get_event_from_eccles():
  
 
     for item in raws:
-        event_url = 'https://eccles.co.nz'+item['href']
+        event_url=''
+        if 'https' in item['href']:
+            event_url=item['href']
+        else:
+            event_url = 'https://eccles.co.nz'+item['href']
+        print(event_url)
         event_imgurl =item.find('img')['src']
         event_title,event_description,event_time,event_location, = scrape_event_description(event_url)
         articles={
@@ -74,16 +79,16 @@ supabase: Client = create_client(url, key)
 
 
 async def save_to_supabase(article):
-    temp_obj = await customize(article)
-    card = customizable(temp_obj)
-    title = card["event_title"]
-    start_date = card["start_date"]
+    # temp_obj = await customize(article)
+    # card = customizable(temp_obj)
+    # title = card["event_title"]
+    # start_date = card["start_date"]
 
-    existing_article = (
-        supabase.table("Event1").select("*").eq("event_title", title).eq("start_date", start_date).execute()
-        )
-    if not existing_article.data:
-        response = supabase.table("Event1").insert(card).execute()
+    # existing_article = (
+    #     supabase.table("Event1").select("*").eq("event_title", title).eq("start_date", start_date).execute()
+    #     )
+    # if not existing_article.data:
+        response = supabase.table("Event1").insert(article).execute()
 
 
 

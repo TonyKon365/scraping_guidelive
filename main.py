@@ -29,7 +29,7 @@ app = FastAPI()
 def retrieve_event(target_id: str, offset: int, limit: int):
     logging.info(f"Fetching events for target_id: {target_id}, offset: {offset}, limit: {limit}")
     response = (
-        supabase.from_("Event1")
+        supabase.from_("Event3")
         .select(
             "event_title, event_category, event_description, event_location, event_imgurl, start_date, start_time, end_date, end_time, add_to_cart_url"
         )
@@ -57,21 +57,6 @@ def retrieve_news(target_id: str, offset: int, limit: int):
     logging.info(f"Response from Supabase: {response}")
     return response
 
-
-# HTTP Request - Retrieve Detailed Events
-@app.get("/event/{target_id}")
-def retrieve_events(target_id: str, offset: int, limit: int):
-    logging.info(f"Fetching detailed events for target_id: {target_id}, offset: {offset}, limit: {limit}")
-    response = (
-        supabase.from_("guideEvent")
-        .select(
-            "event_title, event_category, event_description, event_location, event_imgurl, start_date, start_time, end_date, end_time, add_to_cart_url"
-        )
-        .eq("target_id", target_id)
-        .offset(offset)
-        .limit(limit)
-        .execute()
-    )
 
     # Parse the event_location as JSON
     if response.data:
