@@ -107,10 +107,8 @@ async def get_events_from_venuesotautahi():
                                 "add_to_cart_url": event_detail_url,
                                 "start_time": "",
                                 "end_time": "",
-                                "event_location_title":event_location,
-                                "event_street":"",
-                                "event_region":"",
-                                "event_country":"",
+                                 "doorsopen":'',
+                                "restrictions":'',
                                 "event_imgurl": event_imgurl,
                                 "event_location": {
                                     "title": "Apollo Projects Stadium",
@@ -131,10 +129,8 @@ async def get_events_from_venuesotautahi():
                                 "add_to_cart_url": event_detail_url,
                                 "start_time": "",
                                 "end_time": "",
-                                "event_location_title":event_location,
-                                "event_street":"",
-                                "event_region":"",
-                                "event_country":"",
+                                "doorsopen":'',
+                                "restrictions":'',
                                 "event_imgurl": event_imgurl,
                                 "event_location": {
                                     "title": "Christchurch Town Hall",
@@ -176,19 +172,12 @@ async def fetch_event_detail(event_url):
         return ""
 
 async def save_to_supabase(article):
-    temp_obj = await customize(article)
+    temp_obj = await customize(article) 
     card = customizable(temp_obj)
-    add_to_cart_url = card["add_to_cart_url"]
- 
-    card.pop('event_location_title', None)
-    card.pop('event_street', None)
-    card.pop('event_region', None)
-    card.pop('event_country', None)
-
+    title = card["event_title"]
+    start_date = card["start_date"]
     existing_article = (
-        supabase.table("Event3").select("*").eq("add_to_cart_url", add_to_cart_url).execute()
+        supabase.table("Event3").select("*").eq("event_title", title).eq("start_date", start_date).execute()
         )
     if not existing_article.data:
-
         response = supabase.table("Event3").insert(card).execute()
-        print(article)

@@ -24,11 +24,11 @@ from visit.bohmpresentsEvent import get_event_from_bohmpresents
 from visit.venuesotautahi import get_events_from_venuesotautahi
 
 async def scrape_events():
-    # await get_event_from_livenationNZ()
-    # await get_events_from_livenation()
-     await get_events_from_frontiertouring()     
-    # await get_event_from_forummelbourne()
-    # await get_events_from_venuesotautahi()
+    await get_event_from_livenationNZ()
+    await get_events_from_livenation()
+    await get_events_from_frontiertouring()     
+    await get_event_from_forummelbourne()
+    await get_events_from_venuesotautahi()
 
 
 if __name__ == "__main__":

@@ -39,27 +39,18 @@ async def get_events_from_frontiertouring():
 
             # Parse the HTML
             soup = BeautifulSoup(res_text, "lxml")
-            script = soup.find("script", {"type": "application/ld+json"})
-            if not script:
-                print(f"No JSON-LD script found on {Server_API_URL}")
-                return
+            rows = soup.find_all("div",class_='card')
 
-            try:
-                json_data_list = json.loads(script.string)
-            except json.JSONDecodeError as e:
-                print(f"Error parsing JSON data: {e}")
-                return
             
-            print(f"count of {len(json_data_list)}")
+            print(f"count of {len(rows)}")
 
-            for json_data in json_data_list:
+            for item in rows:
                 try:
                     # Extract event details
-                    event_category = json_data.get("@type", "N/A")
-                    event_title = json_data.get("name", "N/A")
-                    event_detail_url = json_data.get("url", "")
-                    event_imgurl = json_data.get("image", "")
-                    country = json_data.get("location", {}).get("address", {}).get("addressCountry", "")
+                    event_category = "music"
+                    event_title = item.find('h6').text.strip()
+                    event_detail_url =target_url+item.find('a')['href']
+                    event_imgurl =target_url+item.find('img')['src']
                     # Fetch event details page for description
                     event_description = ""
                     if event_detail_url:
@@ -70,6 +61,7 @@ async def get_events_from_frontiertouring():
                         list_items=soup1.find_all('div',class_='venue__header-accordion')
                         print(len(list_items),event_detail_url)
                         for item in list_items:
+                           
                             start_date=item.find('div',class_='venue__date').text.strip()
                             end_date=item.find('div',class_='venue__date').text.strip()
                             event_location=item.find('div',class_='venue__name').text.strip()
@@ -87,15 +79,13 @@ async def get_events_from_frontiertouring():
                                 "end_time": "",
                                 "add_to_cart_url": event_detail_url,
                                 "event_imgurl": event_imgurl,
-                                "event_location_title":event_location,
-                                "event_street":"",
-                                "event_region":region,
-                                "event_country":"",
+                                 "doorsopen":'',
+                                "restrictions":'',
                                 "event_location": {
                                     "title": event_location,
                                     "street": "",
                                     "region": region,
-                                    "country": country,
+                                    "country": "New zealand",
                                 },
                             }
 
@@ -111,20 +101,12 @@ async def get_events_from_frontiertouring():
     print("get_events_from_frontiertouring completed")
 
 async def save_to_supabase(article):
-    temp_obj = await customize(article)
+    temp_obj = await customize(article) 
     card = customizable(temp_obj)
-    add_to_cart_url = card["add_to_cart_url"]
+    title = card["event_title"]
     start_date = card["start_date"]
-    
-    card.pop('event_location_title', None)
-    card.pop('event_street', None)
-    card.pop('event_region', None)
-    card.pop('event_country', None)
-
-
     existing_article = (
-        supabase.table("Event3").select("*").eq("add_to_cart_url", add_to_cart_url).eq("start_date", start_date).execute()
+        supabase.table("Event3").select("*").eq("event_title", title).eq("start_date", start_date).execute()
         )
     if not existing_article.data:
         response = supabase.table("Event3").insert(card).execute()
-   

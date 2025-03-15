@@ -68,10 +68,8 @@ async def get_event_from_livenationNZ():
                     "event_description": event_description,
                     "start_time": "",
                     "end_time": "",
-                     "event_location_title":location_title,
-                    "event_street":"",
-                     "event_region":"",
-                    "event_country":"",
+                     "doorsopen":'',
+                    "restrictions":'',
                     "event_location": {
                         "title": location_title,
                         "street": "",
@@ -100,26 +98,12 @@ async def scrape_detail_page(event_url):
         return ""
 
 async def save_to_supabase(article):
-    temp_obj = await customize(article)
+    temp_obj = await customize(article) 
     card = customizable(temp_obj)
-    add_to_cart_url = card["add_to_cart_url"]
- 
-    card['event_location']['title'] = card.get('event_location_title', "")
-    card['event_location']['street'] = card.get('event_street', "")
-    card['event_location']['region'] = card.get('event_region', "")
-    card['event_location']['country'] = card.get('event_country', "")
-
-        # Remove unnecessary keys
-    card.pop('event_location_title', None)
-    card.pop('event_street', None)
-    card.pop('event_region', None)
-    card.pop('event_country', None)
-
-
+    title = card["event_title"]
+    start_date = card["start_date"]
     existing_article = (
-        supabase.table("Event3").select("*").eq("add_to_cart_url", add_to_cart_url).execute()
+        supabase.table("Event3").select("*").eq("event_title", title).eq("start_date", start_date).execute()
         )
     if not existing_article.data:
-
         response = supabase.table("Event3").insert(card).execute()
-        print(card)

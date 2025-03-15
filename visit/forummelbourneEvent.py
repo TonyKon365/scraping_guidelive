@@ -72,9 +72,11 @@ async def get_event_from_forummelbourne():
                     description_div = soup1.find('div', class_='column left')
                     event_description = description_div.get_text(separator=' ', strip=True) if description_div else ""
                     list_item=soup1.find_all('div','show-item-details')
+                    
                     print("count of items",len(list_item,),event_url)
                     for item in list_item:
                         start_date, start_time = "", ""
+                        restrictions=item.find('span',class_='restrict').text.strip()
                         calendar_div = item.find('div', class_='content')
                         if calendar_div:
                             start_date_div = calendar_div.find('span', class_='full-date')
@@ -96,10 +98,8 @@ async def get_event_from_forummelbourne():
                                     "start_time": start_time,
                                     "add_to_cart_url": event_url,
                                     "end_time": "",
-                                    "event_location_title":"Forum Melbourne",
-                                    "event_street":"",
-                                    "event_region":"",
-                                    "event_country":"",
+                                    "doorsopen":start_time,
+                                    "restrictions":restrictions,
                                     "event_location": {
                                         "title": "Forum Melbourne",
                                         "street": "154 Flinders St",
@@ -121,20 +121,12 @@ async def get_event_from_forummelbourne():
 
 # Function to check duplication and save data to Supabase
 async def save_to_supabase(article):
-    temp_obj = await customize(article)
+    temp_obj = await customize(article) 
     card = customizable(temp_obj)
-    add_to_cart_url = card["add_to_cart_url"]
+    title = card["event_title"]
     start_date = card["start_date"]
-    
-    card.pop('event_location_title', None)
-    card.pop('event_street', None)
-    card.pop('event_region', None)
-    card.pop('event_country', None)
-
-
     existing_article = (
-        supabase.table("Event3").select("*").eq("add_to_cart_url", add_to_cart_url).eq("start_date", start_date).execute()
+        supabase.table("Event3").select("*").eq("event_title", title).eq("start_date", start_date).execute()
         )
     if not existing_article.data:
         response = supabase.table("Event3").insert(card).execute()
-   
