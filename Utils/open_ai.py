@@ -3,6 +3,9 @@ from openai import AsyncOpenAI
 import asyncio
 import ast
 import json
+from dotenv import load_dotenv
+
+load_dotenv()
 
 key: str = os.getenv("OPENAI_API_KEY")
 

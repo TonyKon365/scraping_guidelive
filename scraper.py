@@ -5,6 +5,9 @@ from bs4 import BeautifulSoup
 from supabase import create_client, Client
 import os
 import json
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, filename="/home/ubuntu/scraping_guidelive/test_scraper.log", 
