@@ -33,7 +33,7 @@ def retrieve_event(target_id: str, offset: int, limit: int):
     response = (
         supabase.from_("Event3")
         .select(
-            "event_title, event_category, event_description, event_location, event_imgurl, start_date, start_time, end_date, end_time, add_to_cart_url, doorsopen, restrictions"
+            "id,created_at,target_id,target_url,event_title, event_category, event_description, event_location, event_imgurl, start_date, start_time, end_date, end_time, add_to_cart_url, doorsopen, restrictions"
         )
         .eq("target_id", target_id)
         .offset(offset)

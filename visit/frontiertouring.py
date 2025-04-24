@@ -85,7 +85,7 @@ async def get_events_from_frontiertouring():
                                     "title": event_location,
                                     "street": "",
                                     "region": region,
-                                    "country": "New zealand",
+                                    "country": "",
                                 },
                             }
 
